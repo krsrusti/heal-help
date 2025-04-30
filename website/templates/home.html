@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Enter your log{% endblock %}
+
+{% block content %}
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            /* First the image, then the gradient */
+            background-image: url("{{ url_for('static', filename='dia.png') }}");                  
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh; /* Full viewport height */
+            color: black; /* Make text readable */
+    }
+
+    .container {
+      width: 80%;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .form-container {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .form-container input,
+    .form-container select {
+      padding: 10px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-container button {
+      padding: 10px 20px;
+      background-color: rgb(43, 45, 46);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .form-container button:hover {
+      background-color: #45a049;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: rgb(43, 45, 46);
+      color: white;
+    }
+
+    td input {
+      width: 100%;
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    td input:focus {
+      border: 2px solid #4CAF50;
+    }
+
+    .normal {
+      background-color: #c8e6c9; /* Light Green for Normal */
+    }
+
+    .prediabetes {
+      background-color: #fff9c4; /* Light Yellow for Prediabetes */
+    }
+
+   
+    .low{
+      background-color: rgb(222, 236, 249); 
+    }
+    .high{
+      background-color: #ffccbc;
+    }
+  </style>
+
+  <div class="container">
+    <h1>Blood Sugar Log</h1>
+
+   
+    <form class="form-container" method="POST" action="/home">
+      <select id="mealTime" name="meal_time">
+        <option value="breakfast">Breakfast</option>
+        <option value="lunch">Lunch</option>
+        <option value="dinner">Dinner</option>
+      </select>
+      <input type="date" id="logDate" name="log_date" />
+      <input type="number" id="bloodSugarLevel" name="blood_sugar_level" placeholder="Blood Sugar Level (mg/dL)" />
+      <select id="sugarType" name="sugar_type">
+        <option value="beforeFood">Before Food</option>
+        <option value="afterFood">After Food</option>
+        <option value="random">Random</option>
+      </select>
+      <button type="submit">Add Entry</button>
+    </form>
+
+    
+    <table id="sugarLogTable">
+      <thead>
+        <tr>
+          <th>Meal</th>
+          <th>Date</th>
+          <th>Blood Sugar Level (mg/dL)</th>
+          <th>Type</th>
+          <th>Category</th>
+         
+        </tr>
+      </thead>
+      <tbody>
+        {% for log in blood_sugar_logs %}
+          <tr class="{{ log.category | lower }}">
+            <td>{{ log.meal_time | capitalize }}</td>
+            <td>{{ log.log_date }}</td>
+            <td>{{ log.blood_sugar_level }}</td>
+            <td>{{ log.sugar_type | capitalize }}</td>
+            <td>{{ log.category }}</td>
+            
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  
+
+{% endblock %}

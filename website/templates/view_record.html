@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}View Blood Sugar Logs{% endblock %}
+
+{% block content %}
+    
+    <style>
+         body {
+      font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            /* First the image, then the gradient */
+            background-image: url("{{ url_for('static', filename='dia.png') }}");                  
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh; /* Full viewport height */
+            color: black; /* Make text readable */
+    }
+
+        /* Add any styles for the table here */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 2px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: rgb(43, 45, 46);
+            color: white;
+        }
+        h1{
+            margin-top: 20px;
+            text-align: center;
+            font-size: 50px;
+        }
+       table{
+        background-color: white;
+       }
+    </style>
+
+    
+    <h1>Previous Records</h1>
+    <br>
+    <br>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Meal Time</th>
+                <th>Date</th>
+                <th>Blood Sugar Level (mg/dL)</th>
+                <th>Sugar Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in blood_sugar_logs %}
+                <tr>
+                    <td>{{ log.meal_time | capitalize }}</td>
+                    <td>{{ log.log_date }}</td>
+                    <td>{{ log.blood_sugar_level }}</td>
+                    <td>{{ log.sugar_type | capitalize }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">No blood sugar logs found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}

@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}
+    HealHelp
+{% endblock %}
+
+{% block content %}
+    <style>
+        body {
+            font-family:Arial, sans-serif;
+            
+            margin: 0;
+            padding: 0;
+            background-image: url("{{ url_for('static', filename='dia.png') }}");                  
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            height: 100vh; 
+            color: black;
+            
+        }
+
+        h1 {
+            font-family: 'Times New Roman', Times, serif;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 40px;
+            margin-right: 500px;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        .typewriter h1 {
+        border-right: 2px solid black;
+        white-space: nowrap;
+        overflow: hidden;
+        width: fit-content;
+        animation: blink-caret 0.75s step-end infinite;
+        }
+
+        p{
+            font-size: 25px;
+        }
+
+       
+        @keyframes blink-caret
+         {
+        50% {
+        border-color: transparent;
+      }
+    }
+
+    h1{
+        font-size: 50px;
+        text-align: center;
+        margin-top: 250px;
+        margin-left: 200px;
+    }
+    </style>
+
+
+    <body>
+
+        <div class="typewriter">
+        <h1 id="text"></h1>
+        </div>
+        <br>
+
+        <p>We help you to track your daily blood sugar levels 🩸<br> and store your previous data privately for you 😀</p>
+    </body>
+    <script>
+        const text = "WELCOME  TO  HEALHELP ";
+        const speed = 100;       
+        const eraseSpeed = 50;   
+        const delay = 1000;      
+    
+        let i = 0;
+        let isDeleting = false;
+    
+        function typeWriterLoop() {
+            const target = document.getElementById("text");
+    
+            if (isDeleting) {
+                target.innerHTML = text.substring(0, i--);
+            } else {
+                target.innerHTML = text.substring(0, i++);
+            }
+    
+            let nextSpeed = isDeleting ? eraseSpeed : speed;
+    
+            if (!isDeleting && i === text.length + 1) {
+                isDeleting = true;
+                nextSpeed = delay;
+            } else if (isDeleting && i === 0) {
+                isDeleting = false;
+                nextSpeed = delay;
+            }
+    
+            setTimeout(typeWriterLoop, nextSpeed);
+        }
+    
+        window.onload = typeWriterLoop;
+    </script>
+    
+
+{% endblock %}
